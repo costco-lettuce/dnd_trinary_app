@@ -59,7 +59,7 @@ with tab1:
         if eng_text:
             result = encode_english(eng_text)
             # display the result in a green success box
-            st.success(result)
+            st.code(result, language=None)
         else:
             # error handling if they click without typing
             st.warning("Please enter some text first.")
@@ -71,6 +71,6 @@ with tab2:
     if st.button("Convert to English"):
         if tri_text:
             result = decode_trinary(tri_text)
-            st.success(result)
+            st.code(result, language=None)
         else:
             st.warning("Please enter some code first.")
