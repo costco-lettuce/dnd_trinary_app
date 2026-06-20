@@ -27,14 +27,25 @@ def encode_english(text):
     return "\n".join(coded_lines)
 
 def decode_trinary(text):
-    triplets = text.split()
-    decoded_word = ""
-    for triplet in triplets:
-        if triplet in tri_to_eng:
-            decoded_word += tri_to_eng[triplet]
-        else:
-            decoded_word += "[?]" 
-    return decoded_word
+    coded_words = text.strip().split('\n')
+    decoded_sentence = []
+    
+    for coded_word in coded_words:
+        if not coded_word.strip():
+            continue
+            
+        triplets = coded_word.split()
+        current_word = ""
+        
+        for triplet in triplets:
+            if triplet in tri_to_eng:
+                current_word += tri_to_eng[triplet]
+            else:
+                current_word += "[?]" 
+
+        decoded_sentence.append(current_word)
+        
+    return " ".join(decoded_sentence)
 
 
 # web ui for ease of use
