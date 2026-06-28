@@ -1,20 +1,24 @@
 import streamlit as st
 import string
 
-# --- 1. DYNAMIC DICTIONARY GENERATION ---
 def generate_dictionaries(base):
     eng_to_cipher = {}
     cipher_to_eng = {}
     
-    # Symbol mapping based on the remainder (0, 1, 2, 3)
-    # If base 3 is chosen, the loop mathematically never hits 3 (',')
     symbols = {0: '?', 1: '.', 2: '!', 3: ','}
     
-    for i, char in enumerate(string.ascii_uppercase, start=1):
+    # Base-3 perfectly holds 26 characters. Base-4 securely holds 63 characters.
+    if base == 3:
+        char_set = string.ascii_uppercase
+    else:
+        # This creates a string of exactly 63 characters: 
+        # A-Z (26) + a-z (26) + 0-9 (10) + a hyphen (1)
+        char_set = string.ascii_uppercase + string.ascii_lowercase + string.digits + "-"
+        
+    for i, char in enumerate(char_set, start=1):
         val = i
         base_str = ""
         
-        # 3 digits is still perfect because Base-4 can hold up to 63 combinations
         for _ in range(3):
             digit = val % base
             base_str = symbols[digit] + base_str
@@ -24,7 +28,6 @@ def generate_dictionaries(base):
         cipher_to_eng[base_str] = char
         
     return eng_to_cipher, cipher_to_eng
-
 
 # --- 2. CONVERSION FUNCTIONS ---
 def encode_english(text, eng_to_cipher):
