@@ -7,15 +7,16 @@ def generate_dictionaries(base):
     
     symbols = {0: '?', 1: '.', 2: '!', 3: ','}
     
-    # Base-3 perfectly holds 26 characters. Base-4 securely holds 63 characters.
+    # Base-3 mathematically holds 27 items (0-26). Base-4 holds 64 items (0-63).
     if base == 3:
-        char_set = string.ascii_uppercase
+        char_set = string.ascii_uppercase + " "
     else:
-        # This creates a string of exactly 63 characters: 
-        # A-Z (26) + a-z (26) + 0-9 (10) + a hyphen (1)
-        char_set = string.ascii_uppercase + string.ascii_lowercase + string.digits + "-"
+        # A perfectly padded 64-character string to capture all Base-4 combinations
+        # A-Z (26) + a-z (26) + 0-9 (10) + two symbols (2) = 64
+        char_set = string.ascii_uppercase + string.ascii_lowercase + string.digits + "-+"
         
-    for i, char in enumerate(char_set, start=1):
+    # THE FIX: Changing start=1 to start=0 aligns the cipher with the DM's math
+    for i, char in enumerate(char_set, start=0):
         val = i
         base_str = ""
         
